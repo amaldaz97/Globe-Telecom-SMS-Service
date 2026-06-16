@@ -1,0 +1,129 @@
+{
+  "info": {
+    "name": "Globe M360 SMS Service",
+    "description": "REST API for sending SMS via Globe M360 API v3.6.1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "message",
+      "value": "Hello from SUN Mobility"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Send Single SMS",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Request-Id", "value": "postman-single-sms" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mobileNumbers\": [\"639171234567\"],\n  \"message\": \"{{message}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/sms/send",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "sms", "send"]
+        }
+      }
+    },
+    {
+      "name": "Send Bulk SMS",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Request-Id", "value": "postman-bulk-sms" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mobileNumbers\": [\n    \"639171234567\",\n    \"639181234568\",\n    \"639191234569\"\n  ],\n  \"message\": \"{{message}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/sms/send",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "sms", "send"]
+        }
+      }
+    },
+    {
+      "name": "Invalid Payload",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mobileNumbers\": [],\n  \"message\": \"\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/sms/send",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "sms", "send"]
+        }
+      }
+    },
+    {
+      "name": "DLR Webhook",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/webhooks/dlr?transid=T001&msisdn=639272400575&status_code=1&timestamp=2026-06-16T00:00:00Z&rcvd_transid=550e8400-e29b-41d4-a716-446655440000&msgcount=1&telco_id=1",
+          "host": ["{{baseUrl}}"],
+          "path": ["webhooks", "dlr"],
+          "query": [
+            { "key": "transid", "value": "T001" },
+            { "key": "msisdn", "value": "639272400575" },
+            { "key": "status_code", "value": "1" },
+            { "key": "timestamp", "value": "2026-06-16T00:00:00Z" },
+            { "key": "rcvd_transid", "value": "550e8400-e29b-41d4-a716-446655440000" },
+            { "key": "msgcount", "value": "1" },
+            { "key": "telco_id", "value": "1" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "MO Webhook",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/webhooks/mo?transid=MO001&msisdn=639272400575&message=STOP&timestamp=2026-06-16T00:00:00Z&from=639272400575&msgcount=1&telco_id=1",
+          "host": ["{{baseUrl}}"],
+          "path": ["webhooks", "mo"],
+          "query": [
+            { "key": "transid", "value": "MO001" },
+            { "key": "msisdn", "value": "639272400575" },
+            { "key": "message", "value": "STOP" },
+            { "key": "timestamp", "value": "2026-06-16T00:00:00Z" },
+            { "key": "from", "value": "639272400575" },
+            { "key": "msgcount", "value": "1" },
+            { "key": "telco_id", "value": "1" }
+          ]
+        }
+      }
+    }
+  ]
+}
